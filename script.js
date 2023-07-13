@@ -1,7 +1,7 @@
 // Spotify API credentials
 const CLIENT_ID = '7669af05cc4b4b9da95d150b0863bb56';
 const CLIENT_SECRET = '2913fdab618a4209843042a696cd7f96';
-const REDIRECT_URI = 'https://buzzoka.github.io/callback';
+const REDIRECT_URI = 'http://localhost:3000/callback';
 const SCOPES = 'user-read-currently-playing';
 
 // Construct the authorization URL with the scope
