@@ -18,18 +18,43 @@ let accessToken = '';
 
 // Function to retrieve access token
 async function getAccessToken() {
-  // Use the access token from the URL fragment if available
-  const params = new URLSearchParams(window.location.hash.substr(1));
-  accessToken = params.get('access_token');
+  // Use the authorization code from the URL query parameter if available
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
 
-  // If access token is present, use it
-  if (accessToken) {
-    return accessToken;
+  // If authorization code is present, exchange it for an access token
+  if (code) {
+    try {
+      const response = await fetch(AUTH_TOKEN_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          grant_type: 'authorization_code',
+          code,
+          redirect_uri: REDIRECT_URI,
+          client_id: CLIENT_ID,
+          client_secret: CLIENT_SECRET,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        accessToken = data.access_token;
+        return accessToken;
+      } else {
+        console.error('Failed to retrieve access token:', response.status);
+      }
+    } catch (error) {
+      console.error('Error retrieving access token:', error);
+    }
   }
 
   // If access token is not available, redirect user to authorization URL
   window.location.href = AUTH_URL;
 }
+
 
 // Function to fetch the currently playing song
 async function fetchCurrentlyPlayingSong() {
