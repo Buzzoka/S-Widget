@@ -78,8 +78,9 @@ async function fetchCurrentlyPlayingSong() {
         // Update the widget with the currently playing song information
         document.getElementById('info_title').textContent = songTitle;
         document.getElementById('info_artist').textContent = artistName;
-        document.getElementById('time-total').textContent = formatTime(songDuration);
-        document.getElementById('time-elapsed').textContent = formatTime(progressMs / 1000); // Convert progress from milliseconds to seconds
+        document.getElementById('time-elapsed').textContent = formatTime(Math.floor(progressMs / 1000)); // Convert progress from milliseconds to seconds
+        document.getElementById('time-total').textContent = formatTime(Math.floor(songDuration));
+        
 
         // Update the progress bar
         const progressPercentage = (progressMs / songDuration) * 100;
@@ -116,10 +117,11 @@ function updateProgressBar() {
 // Helper function to format time as MM:SS
 function formatTime(time) {
   const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
+  const seconds = Math.round(time % 60);
 
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
+
 
 // Call the necessary functions
 getAccessToken().then(() => {
