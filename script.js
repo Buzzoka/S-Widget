@@ -45,16 +45,13 @@ async function fetchCurrentlyPlayingSong() {
     if (data.item) {
       const songTitle = data.item.name;
       const artistName = data.item.artists[0].name;
-      const albumArtworkUrl = data.item.album.images[0].url;
 
-      // Update the widget with the currently playing song information and album artwork
+      // Update the widget with the currently playing song information
       document.getElementById('info_title').textContent = songTitle;
       document.getElementById('info_artist').textContent = artistName;
-      document.querySelector('.album').style.backgroundImage = `url(${albumArtworkUrl})`;
     } else {
       document.getElementById('info_title').textContent = 'Nothing is playing';
       document.getElementById('info_artist').textContent = '';
-      document.querySelector('.album').style.backgroundImage = 'none';
     }
   } else {
     console.error('Failed to fetch currently playing song');
@@ -64,14 +61,12 @@ async function fetchCurrentlyPlayingSong() {
 // Function to update the progress bar
 function updateProgressBar() {
   // Get the current playback position and duration from your music player
+  // Replace the hardcoded values below with your actual implementation
   const currentTime = 124; // Example: replace with actual current playback position in seconds
   const duration = 242; // Example: replace with actual song duration in seconds
 
-  // Calculate the progress percentage
-  const progressPercentage = (currentTime / duration) * 100;
-
   // Update the progress bar
-  document.getElementById('progress_top').style.width = `${progressPercentage}%`;
+  document.getElementById('progress_top').style.width = `${(currentTime / duration) * 100}%`;
   document.getElementById('time-elapsed').textContent = formatTime(currentTime);
   document.getElementById('time-total').textContent = formatTime(duration);
 }
