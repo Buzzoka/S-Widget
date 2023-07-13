@@ -85,10 +85,6 @@ async function fetchCurrentlyPlayingSong() {
         const albumImage = data.item.album.images[0].url; // Assuming the first image in the array is the desired size
         document.getElementById('album-image').src = albumImage;
 
-
-        // Update the progress bar
-        const progressPercentage = (progressMs / songDuration) * 100;
-        document.getElementById('progress_top').style.width = `${progressPercentage}%`;
       } else {
         // No currently playing song
         document.getElementById('info_title').textContent = 'Nothing is playing';
@@ -107,18 +103,29 @@ async function fetchCurrentlyPlayingSong() {
   }
 }
 
-// Function to update the progress bar
-function updateProgressBar() {
-  // Get the current playback position and duration from your music player
-  // Replace the hardcoded values below with your actual implementation
-  const currentTime = 125; // Example: replace with actual current playback position in seconds
-  const duration = 243; // Example: replace with actual song duration in seconds
 
+
+// Call the necessary functions
+getAccessToken().then(() => {
+  fetchCurrentlyPlayingSong().then((data) => {
+    const currentTime = data.progress_ms; // Current playback position in milliseconds
+    const duration = data.item.duration_ms; // Song duration in milliseconds
+    updateProgressBar(currentTime, duration);
+  });
+});
+
+// Function to update the progress bar
+function updateProgressBar(currentTime, duration) {
   // Update the progress bar
-  document.getElementById('progress_top').style.width = `${(currentTime / duration) * 100}%`;
-  document.getElementById('time-elapsed').textContent = formatTime(currentTime);
-  document.getElementById('time-total').textContent = formatTime(duration);
+  const progressPercentage = (currentTime / duration) * 100;
+  const cappedProgress = Math.min(progressPercentage, 100);
+  document.getElementById('progress_top').style.width = `${cappedProgress}%`;
+  document.getElementById('time-elapsed').textContent = formatTime(Math.floor(currentTime / 1000)); // Convert progress from milliseconds to seconds
+  document.getElementById('time-total').textContent = formatTime(Math.floor(duration / 1000)); // Convert duration from milliseconds to seconds
 }
+
+
+
 
 // Helper function to format time as MM:SS
 function formatTime(time) {
