@@ -81,6 +81,10 @@ async function fetchCurrentlyPlayingSong() {
         document.getElementById('time-elapsed').textContent = formatTime(Math.floor(progressMs / 1000)); // Convert progress from milliseconds to seconds
         document.getElementById('time-total').textContent = formatTime(Math.floor(songDuration));
         
+        // Update the album picture
+        const albumImage = data.item.album.images[0].url; // Assuming the first image in the array is the desired size
+        document.getElementById('album-image').src = albumImage;
+
 
         // Update the progress bar
         const progressPercentage = (progressMs / songDuration) * 100;
@@ -92,6 +96,8 @@ async function fetchCurrentlyPlayingSong() {
         document.getElementById('time-total').textContent = '00:00';
         document.getElementById('time-elapsed').textContent = '00:00';
         document.getElementById('progress_top').style.width = '0%';
+        document.getElementById('album-image').src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png';
+        
       }
     } else {
       console.error('Failed to fetch currently playing song');
