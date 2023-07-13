@@ -27,14 +27,18 @@
     height: 100%;
     margin-right: 10px;
     border-radius: 10px;
-    height: 100px;
     width: 250px;
     background-color: #3C2422;
+    display: flex;
+    align-items: center;
+}
+
+#info-wrapper {
+    margin-left: 15px;
 }
 
 #info_title,
 #info_artist {
-    margin-left: 15px;
     letter-spacing: 0.5px;
     font-family: 'Kanit', sans-serif;
     color: #F3A68C;
@@ -44,12 +48,19 @@
     font-size: 20px;
     margin-bottom: 0px;
     font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
 
 #info_artist {
     font-size: 15px;
     margin-top: 0px;
     font-weight: 300;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .player {
