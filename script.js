@@ -126,8 +126,14 @@ function formatTime(time) {
 // Call the necessary functions
 getAccessToken().then(() => {
   fetchCurrentlyPlayingSong().then((data) => {
-    const currentTime = data.progress_ms; // Current playback position in milliseconds
-    const duration = data.item.duration_ms; // Song duration in milliseconds
-    updateProgressBar(currentTime, duration);
+    if (data) {
+      const currentTime = data.progress_ms; // Current playback position in milliseconds
+      const duration = data.item.duration_ms; // Song duration in milliseconds
+      updateProgressBar(currentTime, duration);
+    } else {
+      console.error('Failed to fetch currently playing song data.');
+    }
+  }).catch((error) => {
+    console.error('Error fetching currently playing song:', error);
   });
 });
