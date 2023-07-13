@@ -5,7 +5,7 @@ const REDIRECT_URI = 'http://localhost:3000/callback';
 const SCOPES = 'user-read-currently-playing';
 
 // Construct the authorization URL with the scope
-const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(SCOPES)}&response_type=token`;
+const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(SCOPES)}&response_type=code`;
 
 // Authorization token endpoint
 const AUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token';
