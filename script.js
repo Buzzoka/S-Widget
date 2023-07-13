@@ -106,12 +106,7 @@ async function fetchCurrentlyPlayingSong() {
 }
 
 // Function to update the progress bar
-function updateProgressBar() {
-  // Get the current playback position and duration from your music player
-  // Replace the hardcoded values below with your actual implementation
-  const currentTime = data.progress_ms; // Current playback position in milliseconds
-  const duration = data.item.duration_ms; // Song duration in milliseconds
-
+function updateProgressBar(currentTime, duration) {
   // Update the progress bar
   const progressPercentage = (currentTime / duration) * 100;
   const cappedProgress = Math.min(progressPercentage, 100);
@@ -130,6 +125,9 @@ function formatTime(time) {
 
 // Call the necessary functions
 getAccessToken().then(() => {
-  fetchCurrentlyPlayingSong();
-  updateProgressBar();
+  fetchCurrentlyPlayingSong().then((data) => {
+    const currentTime = data.progress_ms; // Current playback position in milliseconds
+    const duration = data.item.duration_ms; // Song duration in milliseconds
+    updateProgressBar(currentTime, duration);
+  });
 });
