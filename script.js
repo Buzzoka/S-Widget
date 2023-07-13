@@ -55,7 +55,6 @@ async function getAccessToken() {
   window.location.href = AUTH_URL;
 }
 
-
 // Function to fetch the currently playing song
 async function fetchCurrentlyPlayingSong() {
   const currentlyPlayingUrl = `${API_BASE_URL}/me/player/currently-playing`;
@@ -80,11 +79,15 @@ async function fetchCurrentlyPlayingSong() {
         document.getElementById('info_artist').textContent = artistName;
         document.getElementById('time-elapsed').textContent = formatTime(Math.floor(progressMs / 1000)); // Convert progress from milliseconds to seconds
         document.getElementById('time-total').textContent = formatTime(Math.floor(songDuration));
-        
+
         // Update the album picture
         const albumImage = data.item.album.images[0].url; // Assuming the first image in the array is the desired size
         document.getElementById('album-image').src = albumImage;
 
+        // Update the progress bar
+        const progressPercentage = (progressMs / songDuration) * 100;
+        const cappedProgress = Math.min(progressPercentage, 100);
+        document.getElementById('progress_top').style.width = `${cappedProgress}%`;
       } else {
         // No currently playing song
         document.getElementById('info_title').textContent = 'Nothing is playing';
@@ -93,7 +96,6 @@ async function fetchCurrentlyPlayingSong() {
         document.getElementById('time-elapsed').textContent = '00:00';
         document.getElementById('progress_top').style.width = '0%';
         document.getElementById('album-image').src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png';
-        
       }
     } else {
       console.error('Failed to fetch currently playing song');
@@ -103,19 +105,13 @@ async function fetchCurrentlyPlayingSong() {
   }
 }
 
-
-
-// Call the necessary functions
-getAccessToken().then(() => {
-  fetchCurrentlyPlayingSong().then((data) => {
-    const currentTime = data.progress_ms; // Current playback position in milliseconds
-    const duration = data.item.duration_ms; // Song duration in milliseconds
-    updateProgressBar(currentTime, duration);
-  });
-});
-
 // Function to update the progress bar
-function updateProgressBar(currentTime, duration) {
+function updateProgressBar() {
+  // Get the current playback position and duration from your music player
+  // Replace the hardcoded values below with your actual implementation
+  const currentTime = data.progress_ms; // Current playback position in milliseconds
+  const duration = data.item.duration_ms; // Song duration in milliseconds
+
   // Update the progress bar
   const progressPercentage = (currentTime / duration) * 100;
   const cappedProgress = Math.min(progressPercentage, 100);
@@ -124,9 +120,6 @@ function updateProgressBar(currentTime, duration) {
   document.getElementById('time-total').textContent = formatTime(Math.floor(duration / 1000)); // Convert duration from milliseconds to seconds
 }
 
-
-
-
 // Helper function to format time as MM:SS
 function formatTime(time) {
   const minutes = Math.floor(time / 60);
@@ -134,7 +127,6 @@ function formatTime(time) {
 
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
-
 
 // Call the necessary functions
 getAccessToken().then(() => {
