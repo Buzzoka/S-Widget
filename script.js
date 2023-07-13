@@ -85,9 +85,7 @@ async function fetchCurrentlyPlayingSong() {
         document.getElementById('album-image').src = albumImage;
 
         // Update the progress bar
-        const progressPercentage = (progressMs / songDuration) * 100;
-        const cappedProgress = Math.min(progressPercentage, 100);
-        document.getElementById('progress_top').style.width = `${cappedProgress}%`;
+        updateProgressBar(progressMs, songDuration);
       } else {
         // No currently playing song
         document.getElementById('info_title').textContent = 'Nothing is playing';
