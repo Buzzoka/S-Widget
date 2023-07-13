@@ -1,6 +1,8 @@
 // Spotify API credentials
 const CLIENT_ID = '7669af05cc4b4b9da95d150b0863bb56';
 const CLIENT_SECRET = '2913fdab618a4209843042a696cd7f96';
+const REDIRECT_URI = 'https://buzzoka.github.io/callback';
+const SCOPES = 'user-read-currently-playing';
 
 // Authorization token endpoint
 const AUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token';
@@ -19,7 +21,7 @@ async function getAccessToken() {
       'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: `Basic ${btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)}`,
     },
-    body: 'grant_type=client_credentials',
+    body: `grant_type=client_credentials&scope=${SCOPES}`,
   });
 
   if (response.ok) {
