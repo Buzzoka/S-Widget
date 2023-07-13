@@ -71,14 +71,14 @@ async function fetchCurrentlyPlayingSong() {
       if (data.item) {
         const songTitle = data.item.name;
         const artistName = data.item.artists[0].name;
-        const songDuration = data.item.duration_ms / 1000; // Convert duration from milliseconds to seconds
+        const songDuration = data.item.duration_ms; // Song duration in milliseconds
         const progressMs = data.progress_ms; // Current playback position in milliseconds
 
         // Update the widget with the currently playing song information
         document.getElementById('info_title').textContent = songTitle;
         document.getElementById('info_artist').textContent = artistName;
         document.getElementById('time-elapsed').textContent = formatTime(Math.floor(progressMs / 1000)); // Convert progress from milliseconds to seconds
-        document.getElementById('time-total').textContent = formatTime(Math.floor(songDuration));
+        document.getElementById('time-total').textContent = formatTime(Math.floor(songDuration / 1000)); // Convert duration from milliseconds to seconds
 
         // Update the album picture
         const albumImage = data.item.album.images[0].url; // Assuming the first image in the array is the desired size
@@ -123,15 +123,7 @@ function formatTime(time) {
 
 // Call the necessary functions
 getAccessToken().then(() => {
-  fetchCurrentlyPlayingSong().then((data) => {
-    if (data) {
-      const currentTime = data.progress_ms; // Current playback position in milliseconds
-      const duration = data.item.duration_ms; // Song duration in milliseconds
-      updateProgressBar(currentTime, duration);
-    } else {
-      console.error('Failed to fetch currently playing song data.');
-    }
-  }).catch((error) => {
+  fetchCurrentlyPlayingSong().catch((error) => {
     console.error('Error fetching currently playing song:', error);
   });
 });
