@@ -45,18 +45,31 @@ async function fetchCurrentlyPlayingSong() {
     if (data.item) {
       const songTitle = data.item.name;
       const artistName = data.item.artists[0].name;
+      const songDuration = data.item.duration_ms / 1000; // Convert duration from milliseconds to seconds
+      const progressMs = data.progress_ms; // Current playback position in milliseconds
 
       // Update the widget with the currently playing song information
       document.getElementById('info_title').textContent = songTitle;
       document.getElementById('info_artist').textContent = artistName;
+      document.getElementById('time-total').textContent = formatTime(songDuration);
+      document.getElementById('time-elapsed').textContent = formatTime(progressMs / 1000); // Convert progress from milliseconds to seconds
+
+      // Update the progress bar
+      const progressPercentage = (progressMs / songDuration) * 100;
+      document.getElementById('progress_top').style.width = `${progressPercentage}%`;
     } else {
+      // No currently playing song
       document.getElementById('info_title').textContent = 'Nothing is playing';
       document.getElementById('info_artist').textContent = '';
+      document.getElementById('time-total').textContent = '00:00';
+      document.getElementById('time-elapsed').textContent = '00:00';
+      document.getElementById('progress_top').style.width = '0%';
     }
   } else {
     console.error('Failed to fetch currently playing song');
   }
 }
+
 
 // Function to update the progress bar
 function updateProgressBar() {
