@@ -4,6 +4,9 @@ const CLIENT_SECRET = '2913fdab618a4209843042a696cd7f96';
 const REDIRECT_URI = 'https://buzzoka.github.io/callback';
 const SCOPES = 'user-read-currently-playing';
 
+// Construct the authorization URL with the scope
+const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(SCOPES)}&response_type=token`;
+
 // Authorization token endpoint
 const AUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token';
 
@@ -15,21 +18,17 @@ let accessToken = '';
 
 // Function to retrieve access token
 async function getAccessToken() {
-  const response = await fetch(AUTH_TOKEN_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Basic ${btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)}`,
-    },
-    body: `grant_type=client_credentials&scope=${SCOPES}`,
-  });
+  // Use the access token from the URL fragment if available
+  const params = new URLSearchParams(window.location.hash.substr(1));
+  accessToken = params.get('access_token');
 
-  if (response.ok) {
-    const data = await response.json();
-    accessToken = data.access_token;
-  } else {
-    console.error('Failed to retrieve access token');
+  // If access token is present, use it
+  if (accessToken) {
+    return accessToken;
   }
+
+  // If access token is not available, redirect user to authorization URL
+  window.location.href = AUTH_URL;
 }
 
 // Function to fetch the currently playing song
@@ -72,13 +71,12 @@ async function fetchCurrentlyPlayingSong() {
   }
 }
 
-
 // Function to update the progress bar
 function updateProgressBar() {
   // Get the current playback position and duration from your music player
   // Replace the hardcoded values below with your actual implementation
-  const currentTime = 124; // Example: replace with actual current playback position in seconds
-  const duration = 242; // Example: replace with actual song duration in seconds
+  const currentTime = 125; // Example: replace with actual current playback position in seconds
+  const duration = 243; // Example: replace with actual song duration in seconds
 
   // Update the progress bar
   document.getElementById('progress_top').style.width = `${(currentTime / duration) * 100}%`;
