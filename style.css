@@ -125,7 +125,7 @@
 }
 
 #progress_top {
-    width: 50%;
+    width: 0%;
     background-color: #EA5E0B;
     z-index: 1;
 }
