@@ -121,9 +121,10 @@ function formatTime(time) {
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-// Call the necessary functions
 getAccessToken().then(() => {
-  fetchCurrentlyPlayingSong().catch((error) => {
-    console.error('Error fetching currently playing song:', error);
-  });
+  setInterval(() => {
+     fetchCurrentlyPlayingSong().catch((error) => {
+       console.error('Error fetching currently playing song:', error);
+     });
+   }, 1000);
 });
