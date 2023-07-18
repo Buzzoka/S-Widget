@@ -6,7 +6,7 @@
   height: 300px;
   border-radius: 40px;
   overflow: hidden;
-  background-image: url(/music-player.png);
+  background-image: url(assets/icons/Music-Note.svg);
   position: relative;
   background-size: cover;
   background-position: center;

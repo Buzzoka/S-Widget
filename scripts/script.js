@@ -69,23 +69,34 @@ async function fetchCurrentlyPlayingSong() {
     if (response.ok) {
       const data = await response.json();
       if (data.item) {
-        const songTitle = data.item.name;
-        const artistName = data.item.artists[0].name;
-        const songDuration = data.item.duration_ms; // Song duration in milliseconds
-        const progressMs = data.progress_ms; // Current playback position in milliseconds
+        if (data.currently_playing_type === 'ad') {
+          // Handle the case when an ad is playing
+          document.querySelector('.info-title').textContent = 'Ad Break';
+          document.querySelector('.info-artist').textContent = '';
+          document.querySelector('.time-duration').textContent = '00:00';
+          document.querySelector('.time-elapsed').textContent = '00:00';
+          document.querySelector('.bar-top').style.width = '0%';
+          document.querySelector('.album').style.backgroundImage = `url(assets/icons/music-player.png)`;
+        } else {
+          // Handle the case when a regular track is playing
+          const songTitle = data.item.name;
+          const artistName = data.item.artists[0].name;
+          const songDuration = data.item.duration_ms; // Song duration in milliseconds
+          const progressMs = data.progress_ms; // Current playback position in milliseconds
 
-        // Update the widget with the currently playing song information
-        document.querySelector('.info-title').textContent = songTitle;
-        document.querySelector('.info-artist').textContent = artistName;
-        document.querySelector('.time-elapsed').textContent = formatTime(Math.floor(progressMs / 1000)); // Convert progress from milliseconds to seconds
-        document.querySelector('.time-duration').textContent = formatTime(Math.floor(songDuration / 1000)); // Convert duration from milliseconds to seconds
+          // Update the widget with the currently playing song information
+          document.querySelector('.info-title').textContent = songTitle;
+          document.querySelector('.info-artist').textContent = artistName;
+          document.querySelector('.time-elapsed').textContent = formatTime(Math.floor(progressMs / 1000)); // Convert progress from milliseconds to seconds
+          document.querySelector('.time-duration').textContent = formatTime(Math.floor(songDuration / 1000)); // Convert duration from milliseconds to seconds
 
-        // Update the album picture
-        const albumImage = data.item.album.images[0].url; // Assuming the first image in the array is the desired size
-        document.querySelector('.album').style.backgroundImage = `url(${albumImage})`;
+          // Update the album picture
+          const albumImage = data.item.album.images[0].url; // Assuming the first image in the array is the desired size
+          document.querySelector('.album').style.backgroundImage = `url(${albumImage})`;
 
-        // Update the progress bar
-        updateProgressBar(progressMs, songDuration);
+          // Update the progress bar
+          updateProgressBar(progressMs, songDuration);
+        }
       } else {
         // No currently playing song
         document.querySelector('.info-title').textContent = 'Nothing is playing';
@@ -93,7 +104,7 @@ async function fetchCurrentlyPlayingSong() {
         document.querySelector('.time-duration').textContent = '00:00';
         document.querySelector('.time-elapsed').textContent = '00:00';
         document.querySelector('.bar-top').style.width = '0%';
-        document.querySelector('.album').style.backgroundImage = `url(assets/icons/music-player.png)`;
+        document.querySelector('.album').style.backgroundImage = `url(assets/icons/Music-Note.svg)`;
       }
     } else {
       console.error('Failed to fetch currently playing song');
