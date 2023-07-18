@@ -88,7 +88,7 @@ async function fetchCurrentlyPlayingSong() {
         updateProgressBar(progressMs, songDuration);
       } else {
         // No currently playing song
-        document.querySelector('.info-title').textContent = 'Nothing is playing';
+        document.querySelector('.info-title').textContent = 'Nothing playing';
         document.querySelector('.info-artist').textContent = '';
         document.querySelector('.time-duration').textContent = '00:00';
         document.querySelector('.time-elapsed').textContent = '00:00';
