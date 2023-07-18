@@ -16,44 +16,28 @@ p {
   border-radius: 40px;
 }
 
+/* CSS */
 .visualizer {
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
   width: 90px;
   height: 40px;
 }
 
-.v-center,
-.v-left,
-.v-right,
 .v-left-most,
+.v-left,
+.v-center,
+.v-right,
 .v-right-most {
-
   width: 10px;
   background-color: #BCBCBC;
   border-radius: 20px;
   transition: height 0.15s;
-
-}
-
-
-.v-center {
   height: 20px;
 }
 
-.v-left,
-.v-right {
-  height: 20px;
-}
-
-.v-right-most,
-.v-left-most {
-  height: 20px;
-}
 
 .time-stamps {
   width: 450px;

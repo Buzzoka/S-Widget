@@ -16,6 +16,9 @@ const API_BASE_URL = 'https://api.spotify.com/v1';
 // Access token variable
 let accessToken = '';
 
+// Animation duration for visualizer
+const VISUALIZER_ANIMATION_DURATION = 150; // Duration in milliseconds
+
 // Function to retrieve access token
 async function getAccessToken() {
   // Use the authorization code from the URL query parameter if available
@@ -77,6 +80,7 @@ async function fetchCurrentlyPlayingSong() {
           document.querySelector('.time-elapsed').textContent = '00:00';
           document.querySelector('.bar-top').style.width = '0%';
           document.querySelector('.album').style.backgroundImage = `url(assets/icons/AD.svg)`;
+          resetVisualizerAnimation();
         } else {
           // Handle the case when a regular track is playing
           const songTitle = data.item.name;
@@ -96,6 +100,9 @@ async function fetchCurrentlyPlayingSong() {
 
           // Update the progress bar
           updateProgressBar(progressMs, songDuration);
+
+          // Start the visualizer animation
+          startVisualizerAnimation();
         }
       } else {
         // No currently playing song
@@ -105,6 +112,7 @@ async function fetchCurrentlyPlayingSong() {
         document.querySelector('.time-elapsed').textContent = '00:00';
         document.querySelector('.bar-top').style.width = '0%';
         document.querySelector('.album').style.backgroundImage = `url(assets/icons/Music-Note.svg)`;
+        resetVisualizerAnimation();
       }
     } else {
       console.error('Failed to fetch currently playing song');
@@ -130,6 +138,48 @@ function formatTime(time) {
   const seconds = Math.round(time % 60);
 
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+// Function to start the visualizer animation
+function startVisualizerAnimation() {
+  const visualizerElements = document.querySelectorAll('.visualizer > div');
+  visualizerElements.forEach((element) => {
+    element.style.height = '20px'; // Set initial height to 20px
+    element.style.transition = `height ${VISUALIZER_ANIMATION_DURATION}ms linear`;
+  });
+
+  requestAnimationFrame(updateVisualizerAnimation);
+}
+
+// Function to update the visualizer animation
+function updateVisualizerAnimation() {
+  const visualizerElements = document.querySelectorAll('.visualizer > div');
+  visualizerElements.forEach((element) => {
+    const currentHeight = parseFloat(element.style.height);
+    const newHeight = Math.min(currentHeight + 2, 40); // Increase height by 2, but limit it to 40px
+    element.style.height = `${newHeight}px`;
+  });
+
+  requestAnimationFrame(updateVisualizerAnimation);
+}
+
+// Function to reset the visualizer animation
+function resetVisualizerAnimation() {
+  const visualizerElements = document.querySelectorAll('.visualizer > div');
+  visualizerElements.forEach((element) => {
+    element.style.height = '20px';
+    element.style.transition = 'none';
+  });
+}
+
+// Function to pause the visualizer animation
+function pauseVisualizerAnimation() {
+  const visualizerElements = document.querySelectorAll('.visualizer > div');
+  visualizerElements.forEach((element) => {
+    const currentHeight = parseFloat(element.style.height);
+    element.style.height = `${currentHeight}px`;
+    element.style.transition = 'none';
+  });
 }
 
 getAccessToken().then(() => {
