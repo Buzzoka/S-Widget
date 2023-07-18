@@ -76,7 +76,7 @@ async function fetchCurrentlyPlayingSong() {
           document.querySelector('.time-duration').textContent = '00:00';
           document.querySelector('.time-elapsed').textContent = '00:00';
           document.querySelector('.bar-top').style.width = '0%';
-          document.querySelector('.album').style.backgroundImage = `url(assets/icons/music-player.png)`;
+          document.querySelector('.album').style.backgroundImage = `url(assets/icons/AD.svg)`;
         } else {
           // Handle the case when a regular track is playing
           const songTitle = data.item.name;
