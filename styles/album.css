@@ -12,13 +12,3 @@
   background-position: center;
   z-index: 2;
 }
-
-
-
-
-#album-placeholder {
-  font-size: 150px;
-  position: absolute;
-  z-index: 1;
-}
-
