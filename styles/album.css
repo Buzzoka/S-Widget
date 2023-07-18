@@ -1,4 +1,4 @@
-.Album {
+.album {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,10 +7,15 @@
   border-radius: 40px;
   overflow: hidden;
   background-image: url(-);
+  position: relative;
+  background-size: cover;
+  background-position: center;
 }
-
 
 #album-placeholder {
   font-size: 80px;
+  position: absolute;
+  z-index: -1;
 }
+
 
