@@ -1,0 +1,8 @@
+.Spotify-Widget {
+  width: 1540px;
+  display: grid;
+  grid-template-columns: 300px 600px 600px;
+  column-gap: 20px;
+}
+
+

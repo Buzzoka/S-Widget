@@ -1,0 +1,30 @@
+.Info {
+  display: flex;
+  align-items: last;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #2C2C2C;
+  height: 300px;
+  border-radius: 40px;
+  overflow: hidden;
+}
+
+
+.Info-title,
+.Info-artist {
+  font-family: 'Open Sans', sans-serif;
+  color: #BCBCBC;
+  margin: 0px 0px 0px 50px;
+}
+
+.Info-title {
+  font-size: 55px;
+  font-weight: 800;
+  white-space: nowrap;
+  margin-bottom: 15px;
+}
+
+.Info-artist {
+  font-size: 40px;
+  font-weight: 600;
+}

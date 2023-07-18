@@ -1,0 +1,16 @@
+.Album {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2C2C2C;
+  height: 300px;
+  border-radius: 40px;
+  overflow: hidden;
+  background-image: url(-);
+}
+
+
+#album-placeholder {
+  font-size: 80px;
+}
+

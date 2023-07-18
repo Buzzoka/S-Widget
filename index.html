@@ -1,36 +1,75 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>My Spotify Widget</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  <title>Spotify-Widget</title>
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" href="/styles/album.css">
+  <link rel="stylesheet" href="/styles/info.css">
+  <link rel="stylesheet" href="/styles/player.css">
+  <link rel="stylesheet" href="/styles/general.css">
+
+
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+
 </head>
 <body>
-    <div class="Widget">
-        <div class="album">
-            <img id="album-image" src="" alt="Album Image">
-        </div>
-        <div class="info">
-            <div id="info-wrapper">
-                <p id="info_title">Loading....</p>
-                <p id="info_artist">Loading.....</p>
-            </div>
-        </div>
-        <div class="player">
-            <div class="progress">
-                <div id="progress_container">
-                    <div class="time-container">
-                        <p id="time-elapsed">00:00</p>
-                        <p id="time-total">00:00</p>
-                    </div>
-                    <div id="progress_bottom">
-                        <div id="progress_top"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="Spotify-Widget">
+
+
+
+
+    <div class="album">
+      <p>
+        <i class="material-icons" id="album-placeholder">music_note</i>
+      </p>
     </div>
-    <script src="script.js"></script>
+
+
+
+    <div class="info">
+      <p class="info-title">Nothing Playing</p>
+      <p class="info-artist">Get the Music Started</p>
+    </div>
+
+
+
+    <div class="player">
+
+
+
+
+
+      <div class="time-stamps">
+
+        <p class="time-elapsed">00:00</p>
+
+        <div class="visualizer">
+          <div class="v-left-most"></div>
+          <div class="v-left"></div>
+          <div class="v-center"></div>
+          <div class="v-right"></div>
+          <div class="v-right-most"></div> 
+        </div>
+        
+        <p class="time-duration">00:00</p>
+      </div>
+
+
+      <div class="progress-bar">
+        <div class="bar-top"></div>
+        <div class="bar-bottom"></div>
+        </div>        
+      </div>
+
+      
+    </div>
+
+  </div>
+  <script src="scripts\script.js"></script>
 </body>
 </html>
