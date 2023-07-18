@@ -83,7 +83,9 @@ async function fetchCurrentlyPlayingSong() {
         // Update the album picture
         const albumImage = data.item.album.images[0].url; // Assuming the first image in the array is the desired size
         document.querySelector('.album').style.backgroundImage = `url(${albumImage})`;
-        document.querySelector('.album-placeholder').style.display = 'none';
+
+        // Update the progress bar
+        updateProgressBar(progressMs, songDuration);
       } else {
         // No currently playing song
         document.querySelector('.info-title').textContent = 'Nothing is playing';
@@ -91,8 +93,7 @@ async function fetchCurrentlyPlayingSong() {
         document.querySelector('.time-duration').textContent = '00:00';
         document.querySelector('.time-elapsed').textContent = '00:00';
         document.querySelector('.bar-top').style.width = '0%';
-        document.querySelector('.album-placeholder').style.display = 'block';
-        document.querySelector('.album').style.backgroundImage = "url('assets/icons/music-player.png')";
+        document.querySelector('.album').style.backgroundImage = `url(assets/icons/music-player.png)`;
       }
     } else {
       console.error('Failed to fetch currently playing song');
