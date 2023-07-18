@@ -1,4 +1,4 @@
-.Info {
+.info {
   display: flex;
   align-items: last;
   justify-content: center;
@@ -10,14 +10,14 @@
 }
 
 
-.Info-title,
-.Info-artist {
+.info-title,
+.info-artist {
   font-family: 'Open Sans', sans-serif;
   color: #BCBCBC;
   margin: 0px 0px 0px 50px;
 }
 
-.Info-title {
+.info-title {
   font-size: 55px;
   font-weight: 800;
   white-space: nowrap;
