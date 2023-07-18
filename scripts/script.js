@@ -5,7 +5,9 @@ const REDIRECT_URI = 'https://buzzoka.github.io/S-Widget/';
 const SCOPES = 'user-read-currently-playing';
 
 // Construct the authorization URL with the scope
-const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(SCOPES)}&response_type=code`;
+const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
+  REDIRECT_URI
+)}&scope=${encodeURIComponent(SCOPES)}&response_type=code`;
 
 // Authorization token endpoint
 const AUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token';
@@ -156,7 +158,7 @@ function updateVisualizerAnimation() {
   const visualizerElements = document.querySelectorAll('.visualizer > div');
   visualizerElements.forEach((element) => {
     const currentHeight = parseFloat(element.style.height);
-    const newHeight = Math.min(currentHeight + 2, 40); // Increase height by 2, but limit it to 40px
+    const newHeight = getRandomAnimationHeight(); // Get random height for animation
     element.style.height = `${newHeight}px`;
   });
 
