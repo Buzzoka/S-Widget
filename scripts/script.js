@@ -189,24 +189,16 @@ function pauseVisualizerAnimation() {
 
 // ... Existing code above ...
 
-// Function to check if text overflows and add animation classes accordingly
+// Function to check if text overflows and add animation class accordingly
 function checkTextOverflow() {
   const infoTitle = document.querySelector('.info-title');
-  const infoArtist = document.querySelector('.info-artist');
 
   if (infoTitle.scrollWidth > infoTitle.offsetWidth) {
     infoTitle.classList.add('scroll-animation-left');
   } else {
     infoTitle.classList.remove('scroll-animation-left');
   }
-
-  if (infoArtist.scrollWidth > infoArtist.offsetWidth) {
-    infoArtist.classList.add('scroll-animation-right');
-  } else {
-    infoArtist.classList.remove('scroll-animation-right');
-  }
 }
-
 
 getAccessToken().then(() => {
   setInterval(() => {
