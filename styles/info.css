@@ -1,6 +1,6 @@
 .info {
   display: flex;
-  align-items: last;
+  align-items: start;
   justify-content: center;
   flex-direction: column;
   background-color: #2C2C2C;
@@ -14,36 +14,27 @@
   font-family: 'Open Sans', sans-serif;
   color: #BCBCBC;
   margin: 0px 0px 0px 50px;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
 }
 
 .info-title {
   font-size: 55px;
   font-weight: 800;
-  white-space: nowrap;
   margin-bottom: 15px;
+  animation: scrollLeft 20s linear infinite;
 }
 
 .info-artist {
   font-size: 40px;
   font-weight: 600;
-}
-
-.scroll-animation-left {
-  animation: scrollLeft 5s linear infinite;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.scroll-animation-right {
-  animation: scrollRight linear infinite;
-  animation-delay: 5s;
-  overflow: hidden;
-  white-space: nowrap;
+  animation: scrollRight 20s linear infinite;
 }
 
 @keyframes scrollLeft {
   0% {
-    transform: translateX(0%);
+    transform: translateX(100%);
   }
   100% {
     transform: translateX(-100%);
@@ -52,9 +43,9 @@
 
 @keyframes scrollRight {
   0% {
-    transform: translateX(100%);
+    transform: translateX(-100%);
   }
   100% {
-    transform: translateX(0%);
+    transform: translateX(100%);
   }
 }

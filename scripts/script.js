@@ -207,6 +207,7 @@ function checkTextOverflow() {
   }
 }
 
+
 getAccessToken().then(() => {
   setInterval(() => {
     fetchCurrentlyPlayingSong().catch((error) => {
