@@ -1,6 +1,6 @@
 .info {
   display: flex;
-  align-items: start;
+  align-items: last;
   justify-content: center;
   flex-direction: column;
   background-color: #2C2C2C;
