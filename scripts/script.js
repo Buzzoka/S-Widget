@@ -21,6 +21,10 @@ let accessToken = '';
 // Animation duration for visualizer
 const VISUALIZER_ANIMATION_DURATION = 150; // Duration in milliseconds
 
+// Variable to store the previous song title and artist
+let previousSongTitle = '';
+let previousArtistName = '';
+
 // Function to retrieve access token
 async function getAccessToken() {
   // Use the authorization code from the URL query parameter if available
@@ -74,46 +78,34 @@ async function fetchCurrentlyPlayingSong() {
     if (response.ok) {
       const data = await response.json();
       if (data.item) {
-        if (data.currently_playing_type === 'ad') {
-          // Handle the case when an ad is playing
-          document.querySelector('.info-title').textContent = 'Ad Break';
-          document.querySelector('.info-artist').textContent = '';
-          document.querySelector('.time-duration').textContent = '00:00';
-          document.querySelector('.time-elapsed').textContent = '00:00';
-          document.querySelector('.bar-top').style.width = '0%';
-          document.querySelector('.album').style.backgroundImage = `url(assets/icons/AD.svg)`;
-          resetVisualizerAnimation();
-        } else {
-          // Handle the case when a regular track is playing
-          const songTitle = data.item.name;
-          const artistName = data.item.artists[0].name;
-          const songDuration = data.item.duration_ms; // Song duration in milliseconds
-          const progressMs = data.progress_ms; // Current playback position in milliseconds
+        const songTitle = data.item.name;
+        const artistName = data.item.artists[0].name;
+        const songDuration = data.item.duration_ms; // Song duration in milliseconds
+        const progressMs = data.progress_ms; // Current playback position in milliseconds
 
+        // Check if the song title or artist has changed
+        if (songTitle !== previousSongTitle || artistName !== previousArtistName) {
           // Update the widget with the currently playing song information
           document.querySelector('.info-title').textContent = songTitle;
           document.querySelector('.info-artist').textContent = artistName;
-          document.querySelector('.time-elapsed').textContent = formatTime(Math.floor(progressMs / 1000)); // Convert progress from milliseconds to seconds
-          document.querySelector('.time-duration').textContent = formatTime(Math.floor(songDuration / 1000)); // Convert duration from milliseconds to seconds
 
-          // Update the album picture
-          const albumImage = data.item.album.images[0].url; // Assuming the first image in the array is the desired size
-          document.querySelector('.album').style.backgroundImage = `url(${albumImage})`;
+          // Update the previous song title and artist
+          previousSongTitle = songTitle;
+          previousArtistName = artistName;
 
-          // Update the progress bar
-          updateProgressBar(progressMs, songDuration);
-
-          // Start the visualizer animation
-          startVisualizerAnimation();
+          // Update the colors to indicate that the music is playing
+          updateColors(true);
         }
+
+        // Update the progress bar
+        updateProgressBar(progressMs, songDuration);
+
+        // Start the visualizer animation
+        startVisualizerAnimation();
       } else {
         // No currently playing song
-        document.querySelector('.info-title').textContent = 'Nothing is playing';
-        document.querySelector('.info-artist').textContent = '';
-        document.querySelector('.time-duration').textContent = '00:00';
-        document.querySelector('.time-elapsed').textContent = '00:00';
-        document.querySelector('.bar-top').style.width = '0%';
-        document.querySelector('.album').style.backgroundImage = `url(assets/icons/Music-Note.svg)`;
+        // Update the colors to indicate that the music is paused
+        updateColors(false);
         resetVisualizerAnimation();
       }
     } else {
@@ -134,12 +126,12 @@ function updateProgressBar(currentTime, duration) {
   document.querySelector('.time-duration').textContent = formatTime(Math.floor(duration / 1000)); // Convert duration from milliseconds to seconds
 }
 
-// Helper function to format time as MM:SS
-function formatTime(time) {
-  const minutes = Math.floor(time / 60);
-  const seconds = Math.round(time % 60);
-
-  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+// Function to update the colors based on playback status
+function updateColors(isPlaying) {
+  const elements = document.querySelectorAll('.info-title, .info-artist, .time-elapsed, .time-duration');
+  elements.forEach((element) => {
+    element.style.color = isPlaying ? '#C2771B' : '#BCBCBC';
+  });
 }
 
 // Function to start the visualizer animation
@@ -184,12 +176,19 @@ function pauseVisualizerAnimation() {
   });
 }
 
+// Helper function to format time as MM:SS
+function formatTime(time) {
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.round(time % 60);
 
+  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+// Function to retrieve access token
 getAccessToken().then(() => {
   setInterval(() => {
     fetchCurrentlyPlayingSong().catch((error) => {
       console.error('Error fetching currently playing song:', error);
     });
-    checkTextOverflow();
   }, 1000);
 });
