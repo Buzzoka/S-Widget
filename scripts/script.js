@@ -197,6 +197,9 @@ function checkTextOverflow() {
     infoTitle.classList.add('scroll-animation-left');
   } else {
     infoTitle.classList.remove('scroll-animation-left');
+    infoTitle.style.animation = 'none'; // Remove animation when text doesn't overflow
+    infoTitle.offsetWidth; // Trigger reflow to remove animation smoothly
+    infoTitle.style.animation = null; // Reset animation property
   }
 }
 
