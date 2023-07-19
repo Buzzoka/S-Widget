@@ -24,10 +24,11 @@
   font-weight: 800;
   margin-bottom: 15px;
   animation: scrollLeft 20s linear infinite;
-  animation-delay: 2s;
-  animation-fill-mode: both;
-  animation-play-state: running;
+  white-space: nowrap;
+  position: absolute;
+  left: 0;
 }
+
 
 .info-artist {
   font-size: 40px;
