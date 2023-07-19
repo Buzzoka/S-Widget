@@ -185,24 +185,6 @@ function pauseVisualizerAnimation() {
 }
 
 
-
-
-// ... Existing code above ...
-
-// Function to check if text overflows and add animation class accordingly
-function checkTextOverflow() {
-  const infoTitle = document.querySelector('.info-title');
-
-  if (infoTitle.scrollWidth > infoTitle.offsetWidth) {
-    infoTitle.classList.add('scroll-animation-left');
-  } else {
-    infoTitle.classList.remove('scroll-animation-left');
-    infoTitle.style.animation = 'none'; // Remove animation when text doesn't overflow
-    infoTitle.offsetWidth; // Trigger reflow to remove animation smoothly
-    infoTitle.style.animation = null; // Reset animation property
-  }
-}
-
 getAccessToken().then(() => {
   setInterval(() => {
     fetchCurrentlyPlayingSong().catch((error) => {
