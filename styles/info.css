@@ -1,12 +1,13 @@
 .info {
   display: flex;
-  align-items: last;
+  align-items: start;
   justify-content: center;
   flex-direction: column;
   background-color: #2C2C2C;
   height: 300px;
   border-radius: 40px;
   overflow: hidden;
+  position: relative; /* Add this line */
 }
 
 .info-title,
@@ -20,13 +21,17 @@
 }
 
 .info-title {
+  font-family: 'Open Sans', sans-serif;
+  color: #BCBCBC;
+  margin: 0px 0px 0px 50px;
   font-size: 55px;
   font-weight: 800;
   margin-bottom: 15px;
-  animation: scrollLeft 20s linear infinite;
   white-space: nowrap;
   position: absolute;
-  left: 0;
+  top: 0; /* Add this line */
+  left: 0; /* Add this line */
+  animation: scrollLeft 20s linear infinite;
 }
 
 
@@ -37,7 +42,7 @@
 
 @keyframes scrollLeft {
   0% {
-    transform: translateX(100%);
+    transform: translateX(0);
   }
   100% {
     transform: translateX(-100%);
